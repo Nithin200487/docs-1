@@ -649,6 +649,40 @@ export default defineConfig({
             link: "https://zerodev-signer-demo.vercel.app/",
           },
           {
+            text: "React Native",
+            collapsed: true,
+            items: [
+              {
+                text: "Expo Quickstart",
+                link: "/wallets/react-native/quickstart",
+              },
+              {
+                text: "Configuration",
+                link: "/wallets/react-native/configuration",
+              },
+              {
+                text: "Google OAuth",
+                link: "/wallets/react-native/google-oauth",
+              },
+              {
+                text: "Domain Association",
+                link: "/wallets/react-native/domain-association",
+              },
+              {
+                text: "Magic Link",
+                link: "/wallets/react-native/magic-link",
+              },
+              {
+                text: "Passkeys",
+                link: "/wallets/react-native/passkeys",
+              },
+              {
+                text: "Export Wallet",
+                link: "/wallets/react-native/export-wallet",
+              },
+            ],
+          },
+          {
             text: "Authentication",
             collapsed: true,
             items: [
@@ -749,6 +783,14 @@ export default defineConfig({
               {
                 text: "useExportPrivateKey",
                 link: "/wallets/hooks/use-export-private-key",
+              },
+              {
+                text: "useAuthenticateOAuthWithExpoWebBrowser",
+                link: "/wallets/hooks/use-authenticate-oauth-with-expo-web-browser",
+              },
+              {
+                text: "ZeroDevExportWebView",
+                link: "/wallets/hooks/export-web-view",
               },
             ],
           },
