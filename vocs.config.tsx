@@ -680,6 +680,10 @@ export default defineConfig({
                 text: "Export Wallet",
                 link: "/wallets/react-native/export-wallet",
               },
+              {
+                text: "React Native Web",
+                link: "/wallets/react-native/web",
+              },
             ],
           },
           {
@@ -715,6 +719,10 @@ export default defineConfig({
               {
                 text: "Export Wallet",
                 link: "/wallets/export",
+              },
+              {
+                text: "Connector Options",
+                link: "/wallets/connector-options",
               },
             ],
           },
@@ -769,8 +777,8 @@ export default defineConfig({
                 link: "/wallets/hooks/use-verify-magic-link",
               },
               {
-                text: "useGetUserEmail",
-                link: "/wallets/hooks/use-get-user-email",
+                text: "useAuthenticators",
+                link: "/wallets/hooks/use-authenticators",
               },
               {
                 text: "useRefreshSession",

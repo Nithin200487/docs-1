@@ -41,8 +41,12 @@ function MagicLinkLogin() {
             email,
             redirectURL: `${window.location.origin}/verify`,
           })
-          // Store otpId for the verify page
+          // Store both values for the verify page
           sessionStorage.setItem('magicLinkOtpId', result.otpId)
+          sessionStorage.setItem(
+            'magicLinkOtpEncryptionTargetBundle',
+            result.otpEncryptionTargetBundle,
+          )
         }}
         disabled={sendMagicLink.isPending || !email}
       >
@@ -78,9 +82,12 @@ function VerifyMagicLink() {
   useEffect(() => {
     const code = searchParams.get('code')
     const otpId = sessionStorage.getItem('magicLinkOtpId')
+    const otpEncryptionTargetBundle = sessionStorage.getItem(
+      'magicLinkOtpEncryptionTargetBundle',
+    )
 
-    if (code && otpId && !isConnected) {
-      verifyMagicLink.mutateAsync({ otpId, code })
+    if (code && otpId && otpEncryptionTargetBundle && !isConnected) {
+      verifyMagicLink.mutateAsync({ otpId, code, otpEncryptionTargetBundle })
     }
   }, [searchParams])
 
@@ -102,10 +109,10 @@ function VerifyMagicLink() {
 
 ## How it works
 
-1. **Send link**: `useSendMagicLink` sends an email with a magic link pointing to your `redirectURL`. It returns an `otpId` that you need for verification.
+1. **Send link**: `useSendMagicLink` sends an email with a magic link pointing to your `redirectURL`. It returns an `otpId` and `otpEncryptionTargetBundle` that you need for verification.
 
 2. **User clicks link**: The user clicks the link in their email, which redirects them to your app with a `code` query parameter.
 
-3. **Verify**: Your verify page calls `useVerifyMagicLink` with the `otpId` and `code`. If valid, the SDK authenticates and creates a session.
+3. **Verify**: Your verify page calls `useVerifyMagicLink` with the `otpId`, `otpEncryptionTargetBundle`, and `code`. If valid, the SDK authenticates and creates a session.
 
 After verification, the Wagmi connector is connected and the user's address is available via `useAccount`.

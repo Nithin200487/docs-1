@@ -28,9 +28,12 @@ function VerifyPage() {
   useEffect(() => {
     const code = searchParams.get('code')
     const otpId = sessionStorage.getItem('magicLinkOtpId')
+    const otpEncryptionTargetBundle = sessionStorage.getItem(
+      'magicLinkOtpEncryptionTargetBundle',
+    )
 
-    if (code && otpId && !isConnected) {
-      verifyMagicLink.mutateAsync({ otpId, code })
+    if (code && otpId && otpEncryptionTargetBundle && !isConnected) {
+      verifyMagicLink.mutateAsync({ otpId, code, otpEncryptionTargetBundle })
     }
   }, [searchParams])
 
@@ -56,19 +59,31 @@ function VerifyPage() {
 
 **Required.** The verification code from the magic link URL query parameters.
 
+### otpEncryptionTargetBundle
+
+`string`
+
+**Required.** The encrypted OTP target bundle returned by [`useSendMagicLink`](/wallets/hooks/use-send-magic-link). Store it with `otpId` and pass it verbatim to the verify step.
+
+### connector
+
+`Connector | undefined`
+
+Optional Wagmi connector to verify the magic link with. If omitted, the hook uses the configured ZeroDev connector.
+
 ## Return Types
 
 [TanStack Query mutation docs](https://tanstack.com/query/v5/docs/react/reference/useMutation)
 
 ### mutate
 
-`(variables: { otpId: string; code: string }) => void`
+`(variables: { otpId: string; code: string; otpEncryptionTargetBundle: string; connector?: Connector }) => void`
 
 The mutation function to verify the magic link.
 
 ### mutateAsync
 
-`(variables: { otpId: string; code: string }) => Promise<void>`
+`(variables: { otpId: string; code: string; otpEncryptionTargetBundle: string; connector?: Connector }) => Promise<void>`
 
 Similar to [`mutate`](#mutate) but returns a promise. Resolves when the magic link is verified and the wallet is connected.
 
