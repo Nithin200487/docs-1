@@ -8,11 +8,13 @@
 This page covers the web flow. For Expo / React Native, see [Google OAuth on React Native](/wallets/react-native/google-oauth).
 :::
 
-Google OAuth lets users sign in with their Google account using a popup-based flow. The SDK handles the popup, redirect back to your app, and session creation automatically.
+Google OAuth lets users sign in with their Google account using a popup-based flow. The SDK handles the popup, returns it to the same route that started auth, and completes session creation automatically.
 
 By default, the Google OAuth flow uses a Zerodev-managed Google account for authentication. This allows you to get started quickly without any additional configuration. You can customize the OAuth flow by providing your own Google OAuth client ID and secret in the developer dashboard.
 
 > **Important:** Using custom credentials requires creating a new project with no wallets already created. You cannot switch an existing project from the default Zerodev-managed OAuth setup to a custom client configuration.
+
+In the standard web flow, you do **not** need a dedicated `/oauth-callback` page. Render the auth button on the page that should receive the popup back, and keep the ZeroDev provider mounted there.
 
 ## Hook
 
@@ -72,7 +74,7 @@ function GoogleAuth() {
 
 3. **Open popup**: The SDK opens a popup to that verified Google login URL and polls the popup while the user signs in with Google.
 
-4. **Popup redirect**: After a successful sign-in, the popup returns to your app's origin with `?oauth_success=true&session_id=...`.
+4. **Popup redirect**: After a successful sign-in, the popup returns to the same origin and pathname that started auth, with `?oauth_success=true&session_id=...`.
 
 5. **Complete auth**: The SDK reads `session_id` from the popup URL, completes wallet authentication with it, and then connects the Wagmi connector.
 
